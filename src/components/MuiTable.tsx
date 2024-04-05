@@ -7,11 +7,17 @@ import {
     TableCell,
     Paper
 } from '@mui/material'
-import mockData from '../mockData/mockData.json'
+import { useContext } from 'react';
+import { MyContext } from '../App';
 
+export const MuiTable = ({ tableData } : any) => {
 
-export const MuiTable = () => {
+  const {urlData, setUrlData} = useContext(MyContext);
+  const indexManipulator = (1 + ((urlData.page - 1)) * urlData.pageSize);
+
+  if (tableData === undefined || tableData === null) return null
   return (
+
     <TableContainer component={Paper} sx={{ maxHeight: '300px'}}>
       <Table aria-label='table' stickyHeader>
         <TableHead>
@@ -22,9 +28,9 @@ export const MuiTable = () => {
             </TableRow>
         </TableHead>
         <TableBody>
-            {TableData.items.map((item, index) => (
+            {tableData.map((item: any, index: number) => (
                 <TableRow key={index}>
-                    <TableCell>{index +1}</TableCell>
+                    <TableCell>{index + indexManipulator}</TableCell>
                     <TableCell>{item.name}</TableCell>
                     <TableCell>{item.count}</TableCell>
                 </TableRow>
@@ -35,5 +41,4 @@ export const MuiTable = () => {
   )
 }
 
-const TableData = mockData;
 

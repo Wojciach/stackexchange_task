@@ -1,50 +1,52 @@
-// import { useFetch } from './hooks/useFetch';
-// import { UrlDataType } from './types/types';
+
 import { MuiTable } from './components/MuiTable';
 import { InputFields } from './components/InputFields';
 import './App.css';
-import {createContext, useState} from 'react';
-import { UrlDataType } from './types/types';
+import {createContext, useEffect, useState} from 'react';
+import { UrlDataType, AppErrorType, initialValues } from './types/types';
+import { useFetch } from './hooks/useFetch';
+import { MainAlert } from './components/MainAlert';
 
 export const MyContext = createContext<{
   urlData: UrlDataType;
   setUrlData: React.Dispatch<React.SetStateAction<UrlDataType>>;
+  fetchedData?: any;
+  loading?: boolean;
 }>({
-  urlData: {
-    page: 1,
-    pagesize: 10,
-    order: 'desc',
-    sort: 'popular',
-    search: ''
-  },
+  urlData: initialValues,
   setUrlData: () => {}
   }
 );
  
-function App() {
+export function App() {
 
-  const [urlData, setUrlData] = useState<UrlDataType>({
-    page: 1,
-    pagesize: 10,
-    order: 'desc',
-    sort: 'popular',
-    search: ''
-  });
+  const [tableData, setTableData] = useState<any>([]);
+  const [appError, setAppError] = useState<AppErrorType>(null);
+  const [urlData, setUrlData] = useState<UrlDataType>(initialValues);
+  const [fetchedData, setFetchedData] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const myFetch = useFetch(urlData);
 
-  //const data = mockData;
-
- // const { data } = useFetch(urlData as UrlDataType);
-  //const [url, setUrl] = useFetch('');
-
-
-
- // console.log(data);
+  useEffect(() => {
+      setLoading(true);
+      myFetch.fetchData(urlData).then((data) => {
+          console.log(data);
+          setFetchedData(data);
+          if(data.items) setTableData(data.items);
+          if(data.error_message || data.error_message) {
+            setAppError({id: data.error_id, message: data.error_message});
+          }
+          setLoading(false);
+      })
+      .catch(()=>{setAppError({id: 'None', message:'Something went wrong!'});})
+  }, [urlData]);
 
   return (
-    <MyContext.Provider value={{urlData, setUrlData}}>
+    <MyContext.Provider value={{urlData, setUrlData, fetchedData, loading}}>
       <div className="App" >
           <InputFields />
-          <MuiTable />
+          <MainAlert appError={appError} />
+          <MuiTable tableData={tableData} />
       </div>
     </MyContext.Provider>
   );

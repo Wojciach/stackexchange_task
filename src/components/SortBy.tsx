@@ -1,15 +1,19 @@
 import { FormControl, FormLabel } from '@mui/material';
-import ToggleButton from '@mui/lab/ToggleButton';
-import ToggleButtonGroup from '@mui/lab/ToggleButtonGroup';
+// import ToggleButton from '@mui/lab/ToggleButton';
+// import ToggleButtonGroup from '@mui/lab/ToggleButtonGroup';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { Sort } from '../types/types';
 import { useState, useContext } from 'react';
 import { MyContext } from '../App';
 
-export function SortBy() {
+interface SortByProps {};
+
+export const SortBy: React.FC<SortByProps> = () => {
     const {urlData, setUrlData} = useContext(MyContext);
 
     const handleChange = (event: React.MouseEvent<HTMLElement>, newSort: Sort) => {
-        setUrlData({...urlData, sort: newSort});
+        if (newSort !== null) setUrlData({...urlData, sort: newSort});
     };
 
     return (

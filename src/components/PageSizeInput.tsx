@@ -1,26 +1,26 @@
-import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import { useState } from 'react';
-import { PageSize } from '../types/types';
+import { FormControl, InputLabel, Select, MenuItem, FormLabel } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
-import { ReactNode } from 'react';
-
+import { useContext } from 'react';
+import { MyContext } from '../App';
 
 
 export function PageSizeInput() {
-    const [pageSize, setPageSize] = useState<PageSize>(10);
-    const handleChange = (event: SelectChangeEvent<number>, child: ReactNode) => {
-        setPageSize(event.target.value as PageSize);
+    const {urlData, setUrlData} = useContext(MyContext);
+    const handleChange = (event: SelectChangeEvent<number>) => {
+        setUrlData({ ...urlData, pageSize: event.target.value as number });
     };
 
     return (
         
         <FormControl sx={{width: '100px'}}>
-            <InputLabel id="page-size-select-label">Page Size</InputLabel>
+            <FormLabel component="legend">Page Size</FormLabel>
+            {/* <InputLabel id="page-size-select-label">Page Size</InputLabel> */}
             <Select
                 labelId="page-size-select-label"
                 id="page-size-select"
-                value={pageSize}
+                value={urlData.pageSize}
                 onChange={handleChange}
+                sx={{ textAlign: 'center' }}
             >
                 <MenuItem value={10}>10</MenuItem>
                 <MenuItem value={20}>20</MenuItem>
