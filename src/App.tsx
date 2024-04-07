@@ -6,6 +6,7 @@ import {createContext, useEffect, useState} from 'react';
 import { UrlDataType, AppErrorType, initialValues } from './types/types';
 import { useFetch } from './hooks/useFetch';
 import { MainAlert } from './components/MainAlert';
+import { TableData } from './types/types';
 
 export const MyContext = createContext<{
   urlData: UrlDataType;
@@ -20,7 +21,7 @@ export const MyContext = createContext<{
  
 export function App() {
 
-  const [tableData, setTableData] = useState<any>([]);
+  const [tableData, setTableData] = useState<TableData>(null);
   const [appError, setAppError] = useState<AppErrorType>(null);
   const [urlData, setUrlData] = useState<UrlDataType>(initialValues);
   const [fetchedData, setFetchedData] = useState<any>(null);
@@ -45,7 +46,7 @@ export function App() {
     <MyContext.Provider value={{urlData, setUrlData, fetchedData, loading}}>
       <div className="App" >
           <InputFields />
-          <MainAlert appError={appError} />
+          <MainAlert appErrorId={appError?.id} appErrorMessage={appError?.message} />
           <MuiTable tableData={tableData} />
       </div>
     </MyContext.Provider>

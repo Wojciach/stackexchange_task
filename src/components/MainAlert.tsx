@@ -1,14 +1,22 @@
 import { Alert } from '@mui/material'
 
-export const MainAlert = ( {appError}: any) => {
-    if(appError === null || appError === undefined) return null;
+interface AlertProps {
+    appErrorId?: string | null | undefined;
+    appErrorMessage?: string | null | undefined;
+}
+
+export const MainAlert = ({
+  appErrorId = null,
+  appErrorMessage = null
+}: AlertProps) => {
+    if(appErrorId === null || appErrorMessage === undefined || appErrorMessage === "") return null;
   return (
     <Alert severity="error" variant='filled' sx={{ margin: 1 }}>
-            Error ID: {appError.id} <br />
-            {appError.message}
+            Error ID: {appErrorId} <br />
+            {appErrorMessage}
     </Alert>
-  )
-}
+  );
+};
         
         
 

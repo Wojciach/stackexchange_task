@@ -7,9 +7,11 @@ import { Sort } from '../types/types';
 import { useState, useContext } from 'react';
 import { MyContext } from '../App';
 
-interface SortByProps {};
+interface SortByProps {
+     sort: Sort;
+};
 
-export const SortBy: React.FC<SortByProps> = () => {
+export const SortBy: React.FC<SortByProps> = ({ sort }) => {
     const {urlData, setUrlData} = useContext(MyContext);
 
     const handleChange = (event: React.MouseEvent<HTMLElement>, newSort: Sort) => {
@@ -20,7 +22,8 @@ export const SortBy: React.FC<SortByProps> = () => {
         <FormControl component="fieldset">
             <FormLabel component="legend">Sort By</FormLabel>
             <ToggleButtonGroup
-                value={urlData.sort}
+                // value={urlData.sort}
+                value={sort}
                 exclusive
                 onChange={handleChange}
                 aria-label="sort"

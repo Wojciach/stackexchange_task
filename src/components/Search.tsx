@@ -2,13 +2,16 @@ import { useState, useContext } from 'react';
 import { MyContext } from '../App';
 import { Button, Stack, TextField } from '@mui/material';
 
-export function Search() {
-    const {setUrlData, loading} = useContext(MyContext);; 
-    const [searchText, setSearchText] = useState('');
+interface SearchProps {
+    search: string;
+    loading: boolean;
+}
 
-    // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     setUrlData({...urlData, search: event.target.value});
-    //   };
+export const Search: React.FC<SearchProps> = ({search, loading} : SearchProps) => {
+
+    const {setUrlData} = useContext(MyContext); 
+    const [searchText, setSearchText] = useState('');
+    const variant = loading ? 'outlined' : 'contained';
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchText(event.target.value);
@@ -20,8 +23,8 @@ export function Search() {
 
     return (
         <Stack direction='column' spacing={0.2}>
-            <TextField onChange={handleChange} label='Search' variant='outlined' sx={{ width: '100%' }}/>
-            <Button onClick={handleClikc} variant='contained' sx={{ width: '100%' }}>
+            <TextField onChange={handleChange} label={search} variant='outlined' sx={{ width: '100%' }}/>
+            <Button onClick={handleClikc} variant={variant} sx={{ width: '100%' }}>
                 {loading ? "Loading..." : "Search"}
             </Button>
         </Stack>

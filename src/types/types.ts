@@ -18,6 +18,8 @@ export type UrlDataType = {
     message: string | null;
   } | null;
 
+  export type TableData = [] | null;
+
   export const initialValues: UrlDataType = {
     page: 1,
     pageSize: 10,
