@@ -1,9 +1,14 @@
-import { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { MyContext } from '../App';
 import { Button, Stack, TextField } from '@mui/material';
 
-export function PageNumber() {
-    const {urlData, setUrlData, fetchedData} = useContext(MyContext);
+interface PageNumberProps {
+    page: number;
+    has_more: boolean;
+  }
+
+export const PageNumber: React.FC<PageNumberProps> = ({page, has_more}) => {
+    const {urlData, setUrlData } = useContext(MyContext);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         let newPageNumber = Number(event.target.value);
@@ -12,14 +17,14 @@ export function PageNumber() {
       };
 
     const handleNext = () => {
-        if (urlData.page !== undefined) {
-            setUrlData({...urlData, page: urlData.page + 1});
+        if (page !== undefined) {
+            setUrlData({...urlData, page: page + 1});
         }
     };
 
     const handlePrevious = () => {
-        if (urlData.page !== undefined && urlData.page > 1) {
-            setUrlData({...urlData, page: urlData.page - 1});
+        if (page !== undefined && page > 1) {
+            setUrlData({...urlData, page: page - 1});
         }
     };
 
@@ -30,7 +35,7 @@ export function PageNumber() {
                 onClick={handlePrevious}
                 variant='outlined'
                 sx={{ width: '100px' }}
-                disabled={urlData.page === 1}
+                disabled={page === 1}
             >
                     Previous
             </Button>
@@ -38,7 +43,7 @@ export function PageNumber() {
                 label='Page'
                 variant='outlined'
                 type='number'
-                value={urlData.page}
+                value={page}
                 onChange={handleChange}
                 sx={{ width: '100px' }}
                 inputProps={{ 
@@ -52,7 +57,7 @@ export function PageNumber() {
                 onClick={handleNext}
                 variant='outlined'
                 sx={{ width: '100px' }}
-                disabled={fetchedData && !fetchedData.has_more}
+                disabled={!has_more}
             >
                     Next
             </Button>

@@ -9,10 +9,15 @@ import {
 } from '@mui/material'
 import { useContext } from 'react';
 import { MyContext } from '../App';
+import { TableData } from '../types/types';
 
-export const MuiTable = ({ tableData } : any) => {
+interface MuiTableProps {
+  tableData?: TableData | null;
+}
 
-  const {urlData, setUrlData} = useContext(MyContext);
+export const MuiTable: React.FC<MuiTableProps> = ({ tableData }) => {
+
+  const { urlData } = useContext(MyContext);
   const indexManipulator = (1 + ((urlData.page - 1)) * urlData.pageSize);
 
   if (tableData === undefined || tableData === null) return null

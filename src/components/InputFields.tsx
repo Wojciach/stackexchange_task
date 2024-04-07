@@ -7,8 +7,15 @@ import { Divider } from '@mui/material';
 import { Search } from './Search';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { UrlDataType } from '../types/types';
+import { MyContext } from '../App';
+import { useContext } from 'react'
 
 export const InputFields = () => {
+
+  const { urlData, fetchedData, loading } = useContext(MyContext);
+  const { sort, page, order, pageSize, search }: UrlDataType = urlData;
+  const { has_more }: { has_more: undefined | null | boolean } = fetchedData || {has_more: false};
 
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -16,14 +23,14 @@ export const InputFields = () => {
   return (
     <>
       <Stack direction={isSmallScreen ? 'column' : 'row'}  spacing={4} justifyContent="center" alignItems="center">
-              <SortBy />
-              <SwitchOrder />
-              <PageSizeInput />
+              <SortBy sort={sort} />
+              <SwitchOrder order={order} />
+              <PageSizeInput pageSize={pageSize} />
       </Stack>
       <Divider sx={{ margin: '20px 0' }}/>
-      <Search />
+      <Search search={search} loading={loading || false} />
       <Divider sx={{ margin: '20px 0' }}/>
-      <PageNumber />
+      <PageNumber page={page} has_more={has_more || false} />
     </>
   )
 }

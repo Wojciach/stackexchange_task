@@ -1,10 +1,14 @@
-import { FormControl, InputLabel, Select, MenuItem, FormLabel } from '@mui/material';
+import { FormControl, Select, MenuItem, FormLabel } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { useContext } from 'react';
 import { MyContext } from '../App';
 
+interface PageSizeInputProps {
+    pageSize: number;
+}
 
-export function PageSizeInput() {
+export const PageSizeInput : React.FC<PageSizeInputProps> = ({pageSize}) => {
+
     const {urlData, setUrlData} = useContext(MyContext);
     const handleChange = (event: SelectChangeEvent<number>) => {
         setUrlData({ ...urlData, pageSize: event.target.value as number });
@@ -18,7 +22,7 @@ export function PageSizeInput() {
             <Select
                 labelId="page-size-select-label"
                 id="page-size-select"
-                value={urlData.pageSize}
+                value={pageSize}
                 onChange={handleChange}
                 sx={{ textAlign: 'center' }}
             >
