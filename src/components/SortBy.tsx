@@ -4,7 +4,7 @@ import { FormControl, FormLabel } from '@mui/material';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { Sort } from '../types/types';
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import { MyContext } from '../App';
 
 interface SortByProps {

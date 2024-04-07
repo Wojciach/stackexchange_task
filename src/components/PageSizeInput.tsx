@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, Select, MenuItem, FormLabel } from '@mui/material';
+import { FormControl, Select, MenuItem, FormLabel } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { useContext } from 'react';
 import { MyContext } from '../App';

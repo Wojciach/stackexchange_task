@@ -7,6 +7,7 @@ import { UrlDataType, AppErrorType, initialValues } from './types/types';
 import { useFetch } from './hooks/useFetch';
 import { MainAlert } from './components/MainAlert';
 import { TableData } from './types/types';
+import  mockData  from './mockData/mockData.json';
 
 export const MyContext = createContext<{
   urlData: UrlDataType;
@@ -25,22 +26,30 @@ export function App() {
   const [appError, setAppError] = useState<AppErrorType>(null);
   const [urlData, setUrlData] = useState<UrlDataType>(initialValues);
   const [fetchedData, setFetchedData] = useState<any>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const myFetch = useFetch(urlData);
+  //const [loading, setLoading] = useState<boolean>(false);
+  const { data, error, loading, fetchData } = useFetch();
 
   useEffect(() => {
-      setLoading(true);
-      myFetch.fetchData(urlData).then((data) => {
-          console.log(data);
-          setFetchedData(data);
-          if(data.items) setTableData(data.items);
-          if(data.error_message || data.error_message) {
-            setAppError({id: data.error_id, message: data.error_message});
-          }
-          setLoading(false);
-      })
-      .catch(()=>{setAppError({id: 'None', message:'Something went wrong!'});})
+    fetchData(urlData);
   }, [urlData]);
+
+  useEffect(() => {
+    if(data) {
+      console.log("dAAAAAAAAAAAAAAta");
+      setFetchedData(data);
+      setTableData(data.items);
+    }
+    if(error) {
+      setAppError({
+        id: error.response.data.error_id,
+        message: error.response.data.error_message
+      });
+      // console.log(mockData);
+      // setFetchedData(mockData);
+      // setTableData(mockData.items);
+    }
+  }, [data, error]);
+
 
   return (
     <MyContext.Provider value={{urlData, setUrlData, fetchedData, loading}}>

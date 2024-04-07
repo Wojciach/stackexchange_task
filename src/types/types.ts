@@ -18,7 +18,7 @@ export type UrlDataType = {
     message: string | null;
   } | null;
 
-  export type TableData = [] | null;
+  export type TableData = Array<object> | null;
 
   export const initialValues: UrlDataType = {
     page: 1,

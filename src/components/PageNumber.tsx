@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { MyContext } from '../App';
 import { Button, Stack, TextField } from '@mui/material';
 
@@ -8,7 +8,7 @@ interface PageNumberProps {
   }
 
 export const PageNumber: React.FC<PageNumberProps> = ({page, has_more}) => {
-    const {urlData, setUrlData, fetchedData} = useContext(MyContext);
+    const {urlData, setUrlData } = useContext(MyContext);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         let newPageNumber = Number(event.target.value);

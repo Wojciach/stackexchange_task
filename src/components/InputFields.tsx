@@ -7,8 +7,7 @@ import { Divider } from '@mui/material';
 import { Search } from './Search';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { UrlDataType, Order } from '../types/types';
-
+import { UrlDataType } from '../types/types';
 import { MyContext } from '../App';
 import { useContext } from 'react'
 
@@ -16,7 +15,7 @@ export const InputFields = () => {
 
   const { urlData, fetchedData, loading } = useContext(MyContext);
   const { sort, page, order, pageSize, search }: UrlDataType = urlData;
-  const { has_more }: any = fetchedData || {has_more: false};
+  const { has_more }: { has_more: undefined | null | boolean } = fetchedData || {has_more: false};
 
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -31,7 +30,7 @@ export const InputFields = () => {
       <Divider sx={{ margin: '20px 0' }}/>
       <Search search={search} loading={loading || false} />
       <Divider sx={{ margin: '20px 0' }}/>
-      <PageNumber page={page} has_more={has_more} />
+      <PageNumber page={page} has_more={has_more || false} />
     </>
   )
 }

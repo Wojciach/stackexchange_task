@@ -17,7 +17,7 @@ interface MuiTableProps {
 
 export const MuiTable: React.FC<MuiTableProps> = ({ tableData }) => {
 
-  const {urlData, setUrlData} = useContext(MyContext);
+  const { urlData } = useContext(MyContext);
   const indexManipulator = (1 + ((urlData.page - 1)) * urlData.pageSize);
 
   if (tableData === undefined || tableData === null) return null
