@@ -7,7 +7,7 @@ import { UrlDataType, AppErrorType, initialValues } from './types/types';
 import { useFetch } from './hooks/useFetch';
 import { MainAlert } from './components/MainAlert';
 import { TableData } from './types/types';
-import  mockData  from './mockData/mockData.json';
+//import  mockData  from './mockData/mockData.json';
 
 export const MyContext = createContext<{
   urlData: UrlDataType;
@@ -35,18 +35,14 @@ export function App() {
 
   useEffect(() => {
     if(data) {
-      console.log("dAAAAAAAAAAAAAAta");
       setFetchedData(data);
       setTableData(data.items);
     }
     if(error) {
       setAppError({
-        id: error.response.data.error_id,
-        message: error.response.data.error_message
+        id: error.response.data.error_idZ || 0,
+        message: error.response.data.error_messageZ || "Unknown error"
       });
-      // console.log(mockData);
-      // setFetchedData(mockData);
-      // setTableData(mockData.items);
     }
   }, [data, error]);
 
