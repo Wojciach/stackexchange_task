@@ -40,8 +40,8 @@ export function App() {
     }
     if(error) {
       setAppError({
-        id: error.response.data.error_idZ || 0,
-        message: error.response.data.error_messageZ || "Unknown error"
+        id: error.response.data.error_id || 0,
+        message: error.response.data.error_message || "Unknown error"
       });
     }
   }, [data, error]);
