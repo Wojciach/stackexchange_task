@@ -10,7 +10,8 @@ const meta = {
     },
     tags: ['autodocs'],
     argTypes: {
-        appErrorId: { control: 'radio', options: ['1', '2', '3', null] },
+        appErrorId: { control: 'radio', options: [1, 2, 3, null] },
+        loading: { control: 'boolean'}
     },
     } satisfies Meta<typeof MainAlert>;
 
@@ -20,7 +21,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
     args: {
-      appErrorId: "3",
+      appErrorId: 3,
       appErrorMessage: 'message example',
     },
   };

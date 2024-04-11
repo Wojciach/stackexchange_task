@@ -14,6 +14,6 @@ export function urlCreator(urlData: UrlDataType): string {
   
     url.search = params.toString();
     
-    console.log(url.toString());
+   // console.log(url.toString());
     return url.toString();
   }
