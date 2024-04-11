@@ -16,7 +16,8 @@ export const MyContext = createContext<{
   loading?: boolean;
 }>({
   urlData: initialValues,
-  setUrlData: () => {}
+  setUrlData: () => {},
+  loading: true
   }
 );
  
@@ -27,31 +28,50 @@ export function App() {
   const [urlData, setUrlData] = useState<UrlDataType>(initialValues);
   const [fetchedData, setFetchedData] = useState<any>(null);
   //const [loading, setLoading] = useState<boolean>(false);
-  const { data, error, loading, fetchData } = useFetch();
+  var { data, error, loading, fetchData } = useFetch();
 
   useEffect(() => {
-    fetchData(urlData);
+   fetchData(urlData);
   }, [urlData]);
 
   useEffect(() => {
-    if(data) {
+    if(loading) {
+    
+    }
+    else if(data && data.items) {
       setFetchedData(data);
       setTableData(data.items);
-    }
-    if(error) {
+      setAppError(null);
+    } else {
       setAppError({
-        id: error.response.data.error_id || 0,
-        message: error.response.data.error_message || "Unknown error"
+        id:  0,
+        message: "Data not found"
       });
     }
-  }, [data, error]);
+
+    if(error) {
+      if (error.response && error.response.data) {
+        // This is an Axios error with a response from the server
+        setAppError({
+          id: error.response.data.error_id || 0,
+          message: error.response.data.error_message || "Unknown error"
+        });
+      } else {
+        // This is not an Axios error, or it's an Axios error without a response from the server
+        setAppError({
+          id: 0,
+          message: error.message || "Unknown error"
+        });
+      }
+    }
+  }, [data, error, loading]);
 
 
   return (
     <MyContext.Provider value={{urlData, setUrlData, fetchedData, loading}}>
       <div className="App" >
           <InputFields />
-          <MainAlert appErrorId={appError?.id} appErrorMessage={appError?.message} />
+          <MainAlert appErrorId={appError?.id} appErrorMessage={appError?.message} loading={loading}/>
           <MuiTable tableData={tableData} />
       </div>
     </MyContext.Provider>

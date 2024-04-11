@@ -7,7 +7,7 @@ import { urlCreator } from './urlCreator';
 export function useFetch() {
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState<any>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const fetchData = async (urlData: UrlDataType) => {
     const urlString = urlCreator(urlData);
@@ -17,6 +17,7 @@ export function useFetch() {
     try {
       const response = await axios.get(urlString);
       setData(response.data);
+     // throw new Error('Test Error');
     } catch (error) {
       setError(error);
     } finally {

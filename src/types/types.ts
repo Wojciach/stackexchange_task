@@ -14,7 +14,7 @@ export type UrlDataType = {
   }
 
   export type AppErrorType = {
-    id: string | null;
+    id: number | null;
     message: string | null;
   } | null;
 
